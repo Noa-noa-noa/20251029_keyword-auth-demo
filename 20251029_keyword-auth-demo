@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ノベルティGET</title>
+<style>
+  #keywordModal {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border: 2px solid #0072c6;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 999;
+  }
+  #keywordModal input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  #keywordModal button {
+    background: #0072c6;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  #errorMsg {
+    color: red;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ノベルティGETボタン -->
+<button id="noveltyBtn">店舗でノベルティをGET</button>
+
+<!-- モーダル -->
+<div id="keywordModal">
+  <p>キーワードを入力してください:</p>
+  <input type="text" id="keywordInput" placeholder="キーワードを入力">
+  <button id="submitKeyword">送信</button>
+  <p id="errorMsg"></p>
+</div>
+
+<script>
+const correctKeyword = "20251030_tandt_demo"; // 共通キーワード
+const redirectURL = "https://example.com/novelty"; // 遷移先URL
+
+document.getElementById("noveltyBtn").addEventListener("click", () => {
+  document.getElementById("keywordModal").style.display = "block";
+});
+
+document.getElementById("submitKeyword").addEventListener("click", () => {
+  const input = document.getElementById("keywordInput").value.trim();
+  if (input === correctKeyword) {
+    // GAイベント送信（例）
+    if (typeof gtag === "function") {
+      gtag('event', 'keyword_success', { 'event_category': 'novelty', 'event_label': 'keyword_auth' });
+    }
+    window.location.href = redirectURL;
+  } else {
+    document.getElementById("errorMsg").textContent = "キーワードが違います";
+  }
+});
+</script>
+
+</body>
+</html>
+``
